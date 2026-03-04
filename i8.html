@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Results &amp; Audio Quality</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Montserrat:wght@600;700;800&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0B1120;
+            color: white;
+            /*  overflow:hidden; */ 
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #0B1120;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+        .accent-line {
+            width: 80px;
+            height: 4px;
+            background-color: #22d3ee;
+            margin-top: 16px;
+            border-radius: 2px;
+        }
+
+        /* Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 32px;
+            height: 100%;
+            z-index: 10;
+        }
+
+        /* Left Column: Visuals */
+        .visuals-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .spectrogram-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px;
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spec-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .spec-badge {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .badge-before { background-color: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+        .badge-after { background-color: rgba(34, 211, 238, 0.2); color: #22d3ee; }
+
+        .canvas-container {
+            flex: 1;
+            background-color: #0f172a;
+            border-radius: 6px;
+            /* overflow:hidden; */
+            position: relative;
+            border: 1px solid #334155;
+        }
+
+        /* Canvas simulation via CSS pattern */
+        .noise-pattern {
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+            background-color: #0f172a;
+        }
+        
+        .spec-pattern {
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(34, 211, 238, 0.4) 0%, transparent 20%),
+                radial-gradient(circle at 50% 30%, rgba(34, 211, 238, 0.6) 0%, transparent 25%),
+                radial-gradient(circle at 80% 60%, rgba(34, 211, 238, 0.5) 0%, transparent 20%),
+                repeating-linear-gradient(90deg, transparent 0, transparent 4px, rgba(34, 211, 238, 0.05) 4px, rgba(34, 211, 238, 0.05) 8px);
+            position: relative;
+        }
+        
+        .spec-lines {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 0 10px;
+        }
+        
+        .spec-line {
+            width: 4px;
+            background-color: #22d3ee;
+            border-radius: 2px 2px 0 0;
+            opacity: 0.7;
+        }
+
+        /* Right Column: Metrics */
+        .metrics-column {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .metric-card {
+            background-color: #1e293b;
+            border-left: 4px solid #22d3ee;
+            padding: 20px;
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .metric-card:hover {
+            transform: translateX(4px);
+            background-color: #263345;
+        }
+
+        .metric-icon {
+            font-size: 24px;
+            color: #22d3ee;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .metric-desc {
+            font-size: 12px;
+            color: #cbd5e1;
+            line-height: 1.4;
+            margin-top: 4px;
+        }
+
+        /* Quote Box */
+        .quote-box {
+            margin-top: auto;
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(15, 23, 42, 0.5));
+            border: 1px solid rgba(34, 211, 238, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background-color: #0B1120;
+            color: #22d3ee;
+            padding: 0 10px;
+            font-size: 20px;
+        }
+
+        .quote-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-style: italic;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+        
+        /* Background Pattern */
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background -->
+<div class="bg-grid"></div>
+<!-- Header -->
+<header>
+<h1>Results &amp; Audio Quality</h1>
+<p class="subtitle">Performance Metrics and Visual Analysis</p>
+<button onclick="location.href='i9.html'">Next</button>
+<div class="accent-line"></div>
+</header>
+<!-- Content Grid -->
+<div class="content-grid">
+<!-- Left: Visualizations -->
+<div class="visuals-column">
+<!-- Before -->
+<div class="spectrogram-card">
+<div class="spec-label">
+<span>Early Training Stage (Epoch 5)</span>
+<span class="spec-badge badge-before">High Loss</span>
+</div>
+<div class="canvas-container">
+<div class="noise-pattern"></div>
+<div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: rgba(255,255,255,0.5); font-size: 14px; font-weight: 500;">
+                            Unstructured Noise / Blurring
+                        </div>
+</div>
+<p style="font-size: 12px; color: #64748b; margin-top: 8px;">Model fails to capture harmonic structures; audio sounds like static.</p>
+</div>
+<!-- Arrow Indicator -->
+<div style="display: flex; justify-content: center; color: #22d3ee; font-size: 20px;">
+<i class="fas fa-arrow-down"></i>
+</div>
+<!-- After -->
+<div class="spectrogram-card" style="border-color: #22d3ee;">
+<div class="spec-label">
+<span style="color: #f1f5f9;">Converged Model (Epoch 500)</span>
+<span class="spec-badge badge-after">Optimal</span>
+</div>
+<div class="canvas-container">
+<div class="spec-pattern">
+<div class="spec-lines">
+<!-- Simulated spectrogram bars -->
+<div class="spec-line" style="height: 30%"></div>
+<div class="spec-line" style="height: 50%"></div>
+<div class="spec-line" style="height: 80%"></div>
+<div class="spec-line" style="height: 60%"></div>
+<div class="spec-line" style="height: 40%"></div>
+<div class="spec-line" style="height: 70%"></div>
+<div class="spec-line" style="height: 90%"></div>
+<div class="spec-line" style="height: 55%"></div>
+<div class="spec-line" style="height: 35%"></div>
+<div class="spec-line" style="height: 65%"></div>
+<div class="spec-line" style="height: 85%"></div>
+<div class="spec-line" style="height: 45%"></div>
+<div class="spec-line" style="height: 75%"></div>
+<div class="spec-line" style="height: 95%"></div>
+<div class="spec-line" style="height: 60%"></div>
+<div class="spec-line" style="height: 40%"></div>
+<div class="spec-line" style="height: 20%"></div>
+<div class="spec-line" style="height: 50%"></div>
+<div class="spec-line" style="height: 80%"></div>
+<div class="spec-line" style="height: 60%"></div>
+</div>
+</div>
+<div style="position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 4px; font-size: 10px; color: #22d3ee;">
+                            Distinct Harmonics
+                        </div>
+</div>
+<p style="font-size: 12px; color: #cbd5e1; margin-top: 8px;">Clear formant structures aligned with phoneme durations; natural speech output.</p>
+</div>
+</div>
+<!-- Right: Metrics -->
+<div class="metrics-column">
+<!-- Metric 1: MOS -->
+<div class="metric-card">
+<i class="fas fa-star metric-icon"></i>
+<div>
+<div class="metric-value">4.2 <span style="font-size: 16px; font-weight: 400; color: #94a3b8;">/ 5.0</span></div>
+<div class="metric-label">Mean Opinion Score (MOS)</div>
+<div class="metric-desc">High naturalness rating in blind listening tests against recorded human speech.</div>
+</div>
+</div>
+<!-- Metric 2: Speed -->
+<div class="metric-card">
+<i class="fas fa-tachometer-alt metric-icon"></i>
+<div>
+<div class="metric-value">0.08 <span style="font-size: 16px; font-weight: 400; color: #94a3b8;">RTF</span></div>
+<div class="metric-label">Real-Time Factor</div>
+<div class="metric-desc">Synthesizes 10 seconds of audio in just 0.8 seconds on CPU.</div>
+</div>
+</div>
+<!-- Metric 3: Phonemes -->
+<div class="metric-card">
+<i class="fas fa-wave-square metric-icon"></i>
+<div>
+<div class="metric-value">98.5%</div>
+<div class="metric-label">Intelligibility Rate</div>
+<div class="metric-desc">Precise handling of Kyrgyz affixes and vowel harmony rules.</div>
+</div>
+</div>
+<!-- Quote -->
+<div class="quote-box">
+<div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+<p class="quote-text">
+                        "KyrgyzTTS successfully bridges the gap between robotic synthesis and natural human speech, offering a high-fidelity voice for the Kyrgyz digital ecosystem."
+                    </p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

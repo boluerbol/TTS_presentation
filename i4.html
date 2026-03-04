@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>KyrgyzTTS Core Architecture</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Montserrat:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0B1120;
+            color: white;
+            /* overflow:hidden; */
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #0B1120;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+        .accent-line {
+            width: 80px;
+            height: 4px;
+            background-color: #22d3ee;
+            margin-top: 16px;
+            border-radius: 2px;
+        }
+
+        /* Columns Container */
+        .columns-container {
+            flex: 1;
+            display: flex;
+            gap: 32px;
+            align-items: stretch;
+            z-index: 10;
+        }
+
+        /* Card Styles */
+        .pillar-card {
+            flex: 1;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 32px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: relative;
+            /* overflow:hidden; */
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-5px);
+            border-color: #22d3ee;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Icon Circle */
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: rgba(34, 211, 238, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            border: 2px solid rgba(34, 211, 238, 0.2);
+        }
+        .icon-circle i {
+            font-size: 32px;
+            color: #22d3ee;
+        }
+
+        /* Card Typography */
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .card-divider {
+            width: 40px;
+            height: 2px;
+            background-color: #475569;
+            margin-bottom: 20px;
+        }
+
+        /* List Styles */
+        .feature-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+        .check-icon {
+            color: #22d3ee;
+            margin-right: 12px;
+            margin-top: 4px;
+            font-size: 12px;
+        }
+
+        /* Top highlight bar for cards */
+        .card-top-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+        }
+
+        /* Background Pattern */
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Specific Colors per Pillar */
+        .pillar-1 .card-top-bar { background-color: #22d3ee; }
+        .pillar-2 .card-top-bar { background-color: #f59e0b; }
+        .pillar-3 .card-top-bar { background-color: #10b981; }
+
+        .pillar-2 .icon-circle { background-color: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.2); }
+        .pillar-2 .icon-circle i { color: #f59e0b; }
+        .pillar-2 .check-icon { color: #f59e0b; }
+        .pillar-2:hover { border-color: #f59e0b; }
+
+        .pillar-3 .icon-circle { background-color: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); }
+        .pillar-3 .icon-circle i { color: #10b981; }
+        .pillar-3 .check-icon { color: #10b981; }
+        .pillar-3:hover { border-color: #10b981; }
+
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background -->
+<div class="bg-grid"></div>
+<!-- Header -->
+<header>
+<h1>Core Architecture</h1>
+<p class="subtitle">Three Technical Pillars of KyrgyzTTS</p>
+<button onclick="location.href='i5.html'">Next</button>
+<div class="accent-line"></div>
+</header>
+
+<!-- Three Columns -->
+<div class="columns-container">
+<!-- Pillar 1: Flow Matching -->
+<div class="pillar-card pillar-1">
+<div class="card-top-bar"></div>
+<div class="icon-circle">
+<i class="fas fa-bezier-curve"></i>
+</div>
+<h2 class="card-title">Conditional Flow Matching</h2>
+<div class="card-divider"></div>
+<div class="feature-list">
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>Optimal Transport (OT):</strong> Learns the shortest, straightest path to transform noise into data.</p>
+</div>
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>Efficiency:</strong> Requires significantly fewer ODE solver steps (6–10) compared to diffusion models.</p>
+</div>
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>Stability:</strong> Direct vector field regression avoids the instability of complex score matching.</p>
+</div>
+</div>
+</div>
+<!-- Pillar 2: Encoder-Decoder -->
+<div class="pillar-card pillar-2">
+<div class="card-top-bar"></div>
+<div class="icon-circle">
+<i class="fas fa-cogs"></i>
+</div>
+<h2 class="card-title">Encoder-Decoder Structure</h2>
+<div class="card-divider"></div>
+<div class="feature-list">
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>Encoder:</strong> Processes input text into phoneme embeddings, capturing linguistic features.</p>
+</div>
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>MAS Alignment:</strong> Monotonic Alignment Search determines exact duration for each character.</p>
+</div>
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>U-Net Decoder:</strong> A 1D U-Net backbone that conditions flow matching on text and time steps.</p>
+</div>
+</div>
+</div>
+<!-- Pillar 3: Vocoder -->
+<div class="pillar-card pillar-3">
+<div class="card-top-bar"></div>
+<div class="icon-circle">
+<i class="fas fa-wave-square"></i>
+</div>
+<h2 class="card-title">Neural Vocoder</h2>
+<div class="card-divider"></div>
+<div class="feature-list">
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>The "Voice Maker":</strong> Converts the generated mel-spectrogram into actual .wav audio waveforms.</p>
+</div>
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>HiFi-GAN / BigVGAN:</strong> State-of-the-art GAN-based vocoders ensuring high fidelity.</p>
+</div>
+<div class="feature-item">
+<i class="fas fa-check check-icon"></i>
+<p><strong>Deployment:</strong> Optimized for speed to maintain the real-time capability of the full pipeline.</p>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

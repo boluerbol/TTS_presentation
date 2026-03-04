@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Key Advantages</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0B1120;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            /* overflow:hidden; */
+        }
+
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            background-color: #0B1120;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        .accent-line {
+            width: 80px;
+            height: 4px;
+            background-color: #22d3ee;
+            margin-top: 16px;
+            border-radius: 2px;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 24px;
+            flex: 1;
+            z-index: 10;
+        }
+
+        /* Card Styles */
+        .advantage-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .advantage-card:hover {
+            transform: translateY(-5px);
+            border-color: #22d3ee;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon-wrapper {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        /* Icon Colors */
+        .icon-speed { background-color: rgba(34, 211, 238, 0.1); color: #22d3ee; }
+        .icon-accuracy { background-color: rgba(244, 63, 94, 0.1); color: #fb7185; }
+        .icon-portable { background-color: rgba(168, 85, 247, 0.1); color: #c084fc; }
+        .icon-lang { background-color: rgba(59, 130, 246, 0.1); color: #60a5fa; }
+        .icon-research { background-color: rgba(16, 185, 129, 0.1); color: #34d399; }
+
+        .card-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: #cbd5e1;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            background-color: #0f172a;
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-top: 12px;
+            align-self: flex-start;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        /* Quote Box Special Style */
+        .quote-card {
+            background-color: rgba(34, 211, 238, 0.05);
+            border: 1px solid #22d3ee;
+            position: relative;
+            justify-content: center;
+        }
+        
+        .quote-icon {
+            font-size: 32px;
+            color: #22d3ee;
+            opacity: 0.5;
+            margin-bottom: 12px;
+        }
+
+        .quote-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            font-style: italic;
+            color: #e2e8f0;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .quote-author {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 600;
+        }
+
+        /* Background Pattern */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23334155' fill-opacity='0.2'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background -->
+<div class="bg-pattern"></div>
+<!-- Header -->
+<header>
+<h1>Key Advantages</h1>
+<p class="subtitle">Why KyrgyzTTS Stands Out in the State Language Landscape</p>
+<button onclick="location.href='i11.html'">Next</button>
+<div class="accent-line"></div>
+</header>
+<!-- Main Grid -->
+<div class="grid-container">
+<!-- Card 1: Speed -->
+<div class="advantage-card">
+<div class="icon-wrapper icon-speed">
+<i class="fas fa-bolt"></i>
+</div>
+<div class="card-title"><p>Unmatched Speed</p></div>
+<div class="card-desc">
+<p>Powered by Optimal Transport Flow Matching, KyrgyzTTS requires only ~10 ODE steps to generate speech, enabling real-time synthesis even on standard CPUs.</p>
+</div>
+<div class="tag-pill"><p>10 Steps vs 1000+</p></div>
+</div>
+<!-- Card 2: Accuracy -->
+<div class="advantage-card">
+<div class="icon-wrapper icon-accuracy">
+<i class="fas fa-bullseye"></i>
+</div>
+<div class="card-title"><p>High Accuracy</p></div>
+<div class="card-desc">
+<p>Delivers high-fidelity audio with natural prosody. The flow matching objective ensures the model learns precise acoustic details without the over-smoothing of simpler models.</p>
+</div>
+<div class="tag-pill"><p>Mel-Spectrogram Fidelity</p></div>
+</div>
+<!-- Card 3: Portability -->
+<div class="advantage-card">
+<div class="icon-wrapper icon-portable">
+<i class="fas fa-mobile-alt"></i>
+</div>
+<div class="card-title"><p>Portability</p></div>
+<div class="card-desc">
+<p>Designed for deployment anywhere. Full support for ONNX export allows the model to run on mobile phones, web browsers, and embedded devices without heavy dependencies.</p>
+</div>
+<div class="tag-pill"><p>ONNX / WebAssembly</p></div>
+</div>
+<!-- Card 4: Language-Inclusivity -->
+<div class="advantage-card">
+<div class="icon-wrapper icon-lang">
+<i class="fas fa-language"></i>
+</div>
+<div class="card-title"><p>Language Inclusivity</p></div>
+<div class="card-desc">
+<p>The first modern, neural Text-to-Speech system specifically optimized for the Kyrgyz language, supporting unique phonetic structures and vowel harmony.</p>
+</div>
+<div class="tag-pill"><p>State Language Support</p></div>
+</div>
+<!-- Card 5: Research-grade -->
+<div class="advantage-card">
+<div class="icon-wrapper icon-research">
+<i class="fas fa-graduation-cap"></i>
+</div>
+<div class="card-title"><p>Research-Grade</p></div>
+<div class="card-desc">
+<p>Built upon the peer-reviewed Matcha-TTS architecture (ICASSP 2024), utilizing state-of-the-art techniques in generative modeling and probabilistic deep learning.</p>
+</div>
+<div class="tag-pill"><p>State-of-the-Art Architecture</p></div>
+</div>
+<!-- Card 6: Quote -->
+<div class="advantage-card quote-card">
+<div class="quote-icon">
+<i class="fas fa-quote-left"></i>
+</div>
+<div class="quote-text">
+<p>"I chose Matcha-TTS because it offers the best balance between synthesis speed and audio quality, utilizing modern Flow Matching instead of slow traditional diffusion."</p>
+</div>
+<div class="quote-author"><p>Defense Strategy</p></div>
+</div>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dataset &amp; Preprocessing</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Montserrat:wght@600;700;800&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #0B1120;
+            color: white;
+            /* overflow:hidden; */
+        }
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            display: flex;
+            flex-direction: column;
+            background-color: #0B1120;
+            position: relative;
+            padding: 40px 60px;
+            box-sizing: border-box;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+            margin: 0;
+            letter-spacing: -0.02em;
+        }
+        .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+        .accent-line {
+            width: 80px;
+            height: 4px;
+            background-color: #22d3ee;
+            margin-top: 16px;
+            border-radius: 2px;
+        }
+
+        /* Grid Layout */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 24px;
+            flex: 1;
+            z-index: 10;
+        }
+
+        /* Card Styles */
+        .stat-card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.3s ease;
+            position: relative;
+            /* overflow:hidden; */
+        }
+
+        .stat-card:hover {
+            border-color: #22d3ee;
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+        }
+
+        .stat-card:hover::before {
+            background-color: #22d3ee;
+        }
+
+        /* Icon Styles */
+        .icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+
+        .icon-blue { background-color: rgba(59, 130, 246, 0.1); color: #60a5fa; }
+        .icon-cyan { background-color: rgba(34, 211, 238, 0.1); color: #22d3ee; }
+        .icon-teal { background-color: rgba(20, 184, 166, 0.1); color: #2dd4bf; }
+        .icon-indigo { background-color: rgba(99, 102, 241, 0.1); color: #818cf8; }
+        .icon-purple { background-color: rgba(168, 85, 247, 0.1); color: #c084fc; }
+        .icon-rose { background-color: rgba(244, 63, 94, 0.1); color: #fb7185; }
+
+        /* Typography */
+        .card-label {
+            font-size: 14px;
+            color: #94a3b8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+        }
+
+        .card-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        .code-snippet {
+            font-family: 'Roboto Mono', monospace;
+            background-color: #0f172a;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #22d3ee;
+        }
+
+        /* Background Pattern */
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background -->
+<div class="bg-grid"></div>
+<!-- Header -->
+<header>
+<h1>Dataset &amp; Preprocessing</h1>
+<p class="subtitle">Custom Curated Kyrgyz Speech Corpus for KyrgyzTTS</p>
+<button onclick="location.href='i7.html'">Next</button>
+<div class="accent-line"></div>
+</header>
+<!-- Grid Content -->
+<div class="stats-grid">
+<!-- Card 1: Language -->
+<div class="stat-card">
+<div class="icon-wrapper icon-cyan">
+<i class="fas fa-language"></i>
+</div>
+<div>
+<p class="card-label">Language Resource</p>
+<p class="card-value">Kyrgyz Language</p>
+<p class="card-desc">High-quality recordings of native speakers, curated specifically for TTS synthesis.</p>
+</div>
+</div>
+<!-- Card 2: Audio Specs -->
+<div class="stat-card">
+<div class="icon-wrapper icon-blue">
+<i class="fas fa-wave-square"></i>
+</div>
+<div>
+<p class="card-label">Audio Specifications</p>
+<p class="card-value">22.05 kHz Mono</p>
+<p class="card-desc">16-bit PCM WAV format. Sampled to balance high fidelity with efficient processing speed.</p>
+</div>
+</div>
+<!-- Card 3: File Structure -->
+<div class="stat-card">
+<div class="icon-wrapper icon-indigo">
+<i class="fas fa-file-code"></i>
+</div>
+<div>
+<p class="card-label">Data Format</p>
+<p class="card-value">LJSpeech Style</p>
+<p class="card-desc">
+                        Standardized structure: <span class="code-snippet">wavs/</span> directory and <span class="code-snippet">filelist.txt</span> containing <span class="code-snippet">path|transcript</span>.
+                    </p>
+</div>
+</div>
+<!-- Card 4: Normalization Stats -->
+<div class="stat-card">
+<div class="icon-wrapper icon-purple">
+<i class="fas fa-sliders-h"></i>
+</div>
+<div>
+<p class="card-label">Acoustic Statistics</p>
+<p class="card-value">Mel-Mean &amp; Std</p>
+<p class="card-desc">
+                        Calculated via <span class="code-snippet">matcha-data-stats</span>. Crucial for calibrating the model to the specific volume/pitch range.
+                    </p>
+</div>
+</div>
+<!-- Card 5: Mel Spectrograms -->
+<div class="stat-card">
+<div class="icon-wrapper icon-teal">
+<i class="fas fa-chart-bar"></i>
+</div>
+<div>
+<p class="card-label">Feature Extraction</p>
+<p class="card-value">80 Mel Bands</p>
+<p class="card-desc">STFT parameters: FFT size 1024, Hop size 256. Optimized for HiFi-GAN vocoder compatibility.</p>
+</div>
+</div>
+<!-- Card 6: Text Normalization -->
+<div class="stat-card">
+<div class="icon-wrapper icon-rose">
+<i class="fas fa-font"></i>
+</div>
+<div>
+<p class="card-label">Text Processing</p>
+<p class="card-value">Cyrillic Cleaners</p>
+<p class="card-desc">Custom regex rules to normalize punctuation, expand numbers, and standardize Kyrgyz orthography.</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

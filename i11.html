@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Conclusion &amp; Future Work</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;family=Roboto+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0B1120;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            /* overflow:hidden; */ 
+        }
+
+        .slide-container {
+            width: 1280px;
+            height: 720px;
+            padding: 40px 60px;
+            box-sizing: border-box;
+            background-color: #0B1120;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Background Pattern - Grid Dots */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            background-image: radial-gradient(#334155 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        /* Header */
+        header {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 10;
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 40px;
+            font-weight: 700;
+            margin: 0;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        .accent-line {
+            width: 80px;
+            height: 4px;
+            background-color: #22d3ee;
+            margin-top: 16px;
+            border-radius: 2px;
+        }
+
+        /* Main Layout */
+        .content-container {
+            display: flex;
+            gap: 40px;
+            flex: 1;
+            z-index: 10;
+            height: 100%;
+        }
+
+        /* Column Styles */
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .column-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #334155;
+        }
+
+        .icon-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .icon-summary { background-color: rgba(34, 211, 238, 0.1); color: #22d3ee; }
+        .icon-future { background-color: rgba(168, 85, 247, 0.1); color: #c084fc; }
+
+        .column-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        /* List Styles */
+        .bullet-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .check-icon {
+            color: #22d3ee;
+            margin-top: 4px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .future-icon {
+            color: #c084fc;
+            margin-top: 4px;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: 600;
+            color: white;
+            font-size: 16px;
+            margin-bottom: 4px;
+            display: block;
+        }
+
+        .item-desc {
+            font-size: 14px;
+            color: #94a3b8;
+            line-height: 1.5;
+            display: block;
+        }
+
+        /* Comparison arrow between columns (Visual decoration) */
+        .center-decoration {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background-color: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            z-index: 20;
+            box-shadow: 0 0 0 8px #0B1120;
+        }
+
+    </style>
+</head>
+<body>
+<div class="slide-container">
+<!-- Background -->
+<div class="bg-pattern"></div>
+<!-- Header -->
+<header>
+<h1>Conclusion &amp; Future Work</h1>
+<p class="subtitle">Summary of Achievements and Path Forward</p>
+<button onclick="location.href='i12.html'">Next</button>
+<div class="accent-line"></div>
+</header>
+<!-- Main Content -->
+<div class="content-container">
+<!-- Left Column: Summary -->
+<div class="column" style="border-top: 4px solid #22d3ee;">
+<div class="column-header">
+<div class="icon-circle icon-summary">
+<i class="fas fa-check-circle"></i>
+</div>
+<div class="column-title">Project Summary</div>
+</div>
+<ul class="bullet-list">
+<li class="list-item">
+<i class="fas fa-check check-icon"></i>
+<div class="item-content">
+<span class="item-title">KyrgyzTTS System</span>
+<span class="item-desc">Successfully adapted Matcha-TTS architecture for the Kyrgyz language, establishing a high-performance baseline.</span>
+</div>
+</li>
+<li class="list-item">
+<i class="fas fa-check check-icon"></i>
+<div class="item-content">
+<span class="item-title">Custom Dataset Curation</span>
+<span class="item-desc">Developed and normalized a specific Kyrgyz audio corpus with standardized Mel-spectrogram statistics.</span>
+</div>
+</li>
+<li class="list-item">
+<i class="fas fa-check check-icon"></i>
+<div class="item-content">
+<span class="item-title">Robust Alignment</span>
+<span class="item-desc">Implemented Monotonic Alignment Search (MAS) to solve character-to-duration mapping without external aligners.</span>
+</div>
+</li>
+<li class="list-item">
+<i class="fas fa-check check-icon"></i>
+<div class="item-content">
+<span class="item-title">Real-Time Synthesis</span>
+<span class="item-desc">Achieved low-latency inference on standard CPUs using Optimal Transport Conditional Flow Matching (OT-CFM).</span>
+</div>
+</li>
+<li class="list-item">
+<i class="fas fa-check check-icon"></i>
+<div class="item-content">
+<span class="item-title">Flexible Deployment</span>
+<span class="item-desc">Delivered accessible interfaces via CLI, Gradio Web UI, and ONNX export for edge devices.</span>
+</div>
+</li>
+</ul>
+</div>
+<!-- Center Decoration -->
+<div class="center-decoration">
+<i class="fas fa-chevron-right"></i>
+</div>
+<!-- Right Column: Future Work -->
+<div class="column" style="border-top: 4px solid #c084fc;">
+<div class="column-header">
+<div class="icon-circle icon-future">
+<i class="fas fa-rocket"></i>
+</div>
+<div class="column-title">Future Work</div>
+</div>
+<ul class="bullet-list">
+<li class="list-item">
+<i class="fas fa-arrow-right future-icon"></i>
+<div class="item-content">
+<span class="item-title">Multi-Speaker Corpus</span>
+<span class="item-desc">Expand the dataset to include diverse male and female voices for better generalization and voice cloning capabilities.</span>
+</div>
+</li>
+<li class="list-item">
+<i class="fas fa-arrow-right future-icon"></i>
+<div class="item-content">
+<span class="item-title">Prosody &amp; Emotion Control</span>
+<span class="item-desc">Integrate style tokens to enable emotional speech synthesis (happy, sad, formal) for expressive reading.</span>
+</div>
+</li>
+<li class="list-item">
+<i class="fas fa-arrow-right future-icon"></i>
+<div class="item-content">
+<span class="item-title">Noise Robustness</span>
+<span class="item-desc">Enhance the model to handle noisy input audio or imperfect recordings commonly found in low-resource settings.</span>
+</div>
+</li>
+<li class="list-item">
+<i class="fas fa-arrow-right future-icon"></i>
+<div class="item-content">
+<span class="item-title">Code-Switching Support</span>
+<span class="item-desc">Develop capabilities for mixed Kyrgyz-Russian sentences, reflecting common daily speech patterns in the region.</span>
+</div>
+</li>
+<li class="list-item">
+<i class="fas fa-arrow-right future-icon"></i>
+<div class="item-content">
+<span class="item-title">Model Quantization</span>
+<span class="item-desc">Apply 8-bit quantization and pruning to further reduce model size for ultra-low-power IoT devices.</span>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</body>
+</html>
